@@ -22,7 +22,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
 
-      - name: Run Test Suite
+      - name: Run Test Suite Directly
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          chmod +x run_tests.sh
-          PYTHONPATH=$PWD:$PWD/src ./run_tests.sh
+          python -m pytest tests/
