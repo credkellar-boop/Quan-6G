@@ -25,4 +25,4 @@ jobs:
       - name: Run Test Suite
         run: |
           chmod +x run_tests.sh
-          PYTHONPATH=$PWD ./run_tests.sh
+          PYTHONPATH=$PWD:$PWD/src ./run_tests.sh
