@@ -4,7 +4,7 @@
 echo "--- Initializing SGIN Test Suite ---"
 
 # 1. Run Unit Tests (Fast, no dependencies)
-pytest tests/unit/
+python -m pytest tests/
 if [ $? -ne 0 ]; then
     echo "Unit Tests Failed. Aborting."
     exit 1
