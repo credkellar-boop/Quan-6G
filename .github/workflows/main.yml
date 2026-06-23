@@ -34,3 +34,13 @@ jobs:
     chmod +x run_tests.sh
     ./run_tests.sh
     
+- name: Install dependencies and package
+  run: |
+    pip install -r requirements.txt  # If you have one
+    pip install -e .                # Installs local modules in editable mode
+
+- name: Run Test Suite
+  run: |
+    chmod +x run_tests.sh
+    ./run_tests.sh
+    
