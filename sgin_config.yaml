@@ -1,0 +1,19 @@
+# SGIN-HFT Global Configuration
+system:
+  node_id: "EDGE_LA_01"
+  environment: "production"
+
+network:
+  fso_target_ip: "10.0.0.5"
+  fso_port: 9999
+  bgp_asn: 65001
+
+hft:
+  max_position_limit: 1000
+  risk_gate_threshold: 0.85 # 85% of margin
+  data_capture_path: "/mnt/data/market_ticks/"
+
+hardware:
+  fpga_mgmt_path: "/dev/xilinx_mgmt"
+  thermal_throttle_limit: 80.0
+  
