@@ -1,0 +1,13 @@
+services:
+  sgin_interface:
+    build: .
+    command: python3 sgin_main_orchestrator.py
+    network_mode: host
+  
+  hft_engine:
+    build: .
+    command: python3 hft_integrated_engine.py
+    depends_on:
+      - sgin_interface
+    shm_size: '1gb' # Necessary for shared memory IPC
+    
