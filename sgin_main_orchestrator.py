@@ -31,3 +31,35 @@ if __name__ == "__main__":
     master = SGINOrchestrator()
     asyncio.run(master.run_ecosystem())
   
+import importlib
+import yaml
+from sgin_modules.sdr_frontend_config import BaseSDR
+
+class HardwareFactory:
+    """Dynamically creates the requested hardware interface."""
+    @staticmethod
+    def get_frontend(class_name):
+        # Dynamically import the module
+        module = importlib.import_module("sgin_modules.sdr_frontend_config")
+        # Get the class from the module
+        frontend_class = getattr(module, class_name)
+        return frontend_class()
+
+def start_orchestrator():
+    # 1. Load Configuration
+    with open("sgin_config.yaml", "r") as f:
+        config = yaml.safe_load(f)
+    
+    # 2. Instantiate Hardware via Factory
+    frontend_name = config['hardware']['frontend_type']
+    frontend = HardwareFactory.get_frontend(frontend_name)
+    
+    # 3. Initialize
+    frontend.configure(freq=3500, bw=100)
+    
+    print(f"[Orchestrator] System live using: {frontend_name}")
+    # Proceed to main loop...
+
+if __name__ == "__main__":
+    start_orchestrator()
+    
