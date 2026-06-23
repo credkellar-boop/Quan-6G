@@ -23,8 +23,6 @@ jobs:
           pip install pytest
 
       - name: Run Test Suite
-        env:
-          PYTHONPATH: ${{github.workspace}}
         run: |
           chmod +x run_tests.sh
-          ./run_tests.sh
+          PYTHONPATH=$PWD ./run_tests.sh
