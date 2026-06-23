@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sgin-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sgin
+  template:
+    metadata:
+      labels:
+        app: sgin
+    spec:
+      containers:
+      - name: hft-engine
+        image: sgin-hft-node:latest
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+        volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm # Critical for high-speed IPC
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
