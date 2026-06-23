@@ -17,3 +17,12 @@ hardware:
   fpga_mgmt_path: "/dev/xilinx_mgmt"
   thermal_throttle_limit: 80.0
   
+modem_interface:
+  type: "6G_NRP_2026"
+  port: "/dev/ttyUSB0"
+  protocol_converter: "GTP-U" # Generic Tunnelling Protocol for 6G
+  
+redundancy_toggle:
+  manual_override: false
+  preferred_path: "FSO"
+  
