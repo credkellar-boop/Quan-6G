@@ -1,13 +1,11 @@
 name: SGIN-HFT CI/CD Pipeline
 
-# This section tells GitHub WHEN to run the tests
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-# This section defines the jobs that run
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -28,3 +26,11 @@ jobs:
         run: |
           chmod +x run_tests.sh
           ./run_tests.sh
+
+- name: Run Test Suite
+  env:
+    PYTHONPATH: ${{ github.workspace }}
+  run: |
+    chmod +x run_tests.sh
+    ./run_tests.sh
+    
