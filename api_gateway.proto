@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package sgin;
+
+service NOBControl {
+  // Command to switch hardware mode (e.g., USRP to 6G)
+  rpc SwitchHardware(HardwareRequest) returns (CommandResponse);
+  
+  // Real-time status stream from the node to the NOB
+  rpc StreamNodeStatus(StatusRequest) returns (stream NodeStatus);
+}
+
+message HardwareRequest {
+  string hardware_type = 1;
+}
+
+message CommandResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message StatusRequest {
+  string node_id = 1;
+}
+
+message NodeStatus {
+  float latency = 1;
+  string current_hw = 2;
+  bool is_alive = 3;
+}
