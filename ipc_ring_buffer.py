@@ -18,3 +18,27 @@ if __name__ == "__main__":
     rb.write(150.25)
     rb.cleanup()
   
+import pytest
+from sgin_modules.ipc_ring_buffer import RingBuffer
+import multiprocessing
+import time
+
+def writer_process(name, val):
+    rb = RingBuffer(name, size=1024)
+    rb.write(val)
+    rb.cleanup()
+
+def test_ring_buffer_integration():
+    shm_name = "test_shm_buffer"
+    test_val = 150.50
+    
+    # Run writer in separate process
+    p = multiprocessing.Process(target=writer_process, args=(shm_name, test_val))
+    p.start()
+    p.join()
+    
+    # Test reader in main process
+    reader = RingBuffer(shm_name, size=1024)
+    assert reader.buf[0] == test_val
+    reader.cleanup()
+    
