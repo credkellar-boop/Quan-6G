@@ -1,20 +1,29 @@
+name: SGIN-HFT CI/CD Pipeline
+
+# This section tells GitHub WHEN to run the tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# This section defines the jobs that run
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      
-      # ADD THIS STEP
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
-          # If you have other dependencies, install them here or use:
-          # pip install -r requirements.txt
-
+          
       - name: Run Test Suite
         run: |
           chmod +x run_tests.sh
