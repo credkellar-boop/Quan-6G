@@ -1,5 +1,3 @@
-
-src/sgin_modules/contest.py
 import pytest
 from unittest.mock import MagicMock
 from sgin_modules.ipc_ring_buffer import RingBuffer
