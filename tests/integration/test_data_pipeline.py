@@ -7,12 +7,16 @@ def test_pipeline_data_flow():
     transport = UDPTransport(port=50051)
     sink = MarketDataSink(buffer_size=1024)
     
+    # FIX: You must link the transport to the sink so data actually flows between them.
+    # (Adjust 'connect' to whatever binding method your UDPTransport class uses).
+    transport.connect(sink) 
+
     # 2. Execute
-    test_packet = b"\x01\x02\x03\x04"
+    test_packet = b'\x01\x02\x03\x04'
     transport.send(test_packet)
-    
+
     # 3. Verify that the sink actually received the packet from the transport
     received_data = sink.read_last_packet()
-    
+
     assert received_data == test_packet
     assert sink.is_active is True
