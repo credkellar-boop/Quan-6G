@@ -1,29 +1,32 @@
-name: SGIN-HFT CI/CD Pipeline
+name: Python Integration and Unit Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
-  test:
+  run-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout Repository code
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest numpy
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Test Suite Directly
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: |
-          python -m pytest tests/
+    - name: Run Pytest with Dynamic Path
+      env:
+        # This dynamically targets the root directory regardless of repo renames
+        PYTHONPATH: ${{ github.workspace }}
+      run: python -m pytest tests/
