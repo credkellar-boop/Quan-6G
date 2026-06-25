@@ -1,3 +1,9 @@
+import os
+print("!!! DEBUG WORKSPACE:", os.listdir('.'), flush=True)
+
+import pytest
+from sgin_modules.udp_transport_layer import UDPTransport
+
 import pytest
 from unittest.mock import MagicMock
 from sgin_modules.hft_integrated_engine import HFTIntegratedEngine
